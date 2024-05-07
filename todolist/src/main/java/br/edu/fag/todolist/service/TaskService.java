@@ -2,7 +2,6 @@ package br.edu.fag.todolist.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TaskService {
     
-    @Autowired
     private TaskRepository taskRepository;
 
     public Task createTask (Task task) {
