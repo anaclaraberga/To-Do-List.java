@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fag.todolist.model.Task;
 import br.edu.fag.todolist.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +34,9 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
+    @Operation(summary = "Criando uma nova tarefa",
+        responses = {@ApiResponse(responseCode = "201", description = "Tarefa criada com sucesso."),
+    @ApiResponse(responseCode = "500", description = "Erro ao criar as tarefas, verifique as informações concedidas.")})
     @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public Task createTask (@RequestBody Task task) {
@@ -36,6 +44,9 @@ public class TaskController {
         return taskService.createTask(task);
     }
 
+    @Operation(summary = "Listando todas as tarefas",
+        responses = {@ApiResponse(responseCode = "200", description = "Tarefas listadas com sucesso."),
+    @ApiResponse(responseCode = "500", description = "Erro ao listar as tarefas, verifique as informações concedidas.")})
     @GetMapping("/tasks")
     @ResponseStatus(HttpStatus.OK)
     public List<Task> getAllTasks() {
@@ -43,6 +54,9 @@ public class TaskController {
         return taskService.ListAllTasks();
     }
 
+    @Operation(summary = "Buscando tarefa pelo Id",
+        responses = {@ApiResponse(responseCode = "200", description = "Tarefa encontrada com sucesso."),
+    @ApiResponse(responseCode = "404", description = "Erro ao encontrar a tarefa, verifique as informações concedidas.")})
     @GetMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Task> getTaskById(@PathVariable(value = "id") Long id) {
@@ -50,6 +64,9 @@ public class TaskController {
         return taskService.findTaskById(id);
     }
 
+    @Operation(summary = "Atualizando tarefa pelo Id",
+        responses = {@ApiResponse(responseCode = "200", description = "Tarefa atualizada com sucesso."),
+    @ApiResponse(responseCode = "404", description = "Erro ao atualizar a tarefa, verifique as informações concedidas.")})
     @PutMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Task> updateTaskById(@PathVariable(value = "id") Long id, @RequestBody Task task) {
@@ -57,6 +74,9 @@ public class TaskController {
         return taskService.updateTaskById(task, id);
     }
 
+    @Operation(summary = "Deletando tarefa pelo Id",
+        responses = {@ApiResponse(responseCode = "204", description = "Tarefa deletada com sucesso."),
+    @ApiResponse(responseCode = "404", description = "Erro ao deletar a tarefa, verifique as informações concedidas.")})
     @DeleteMapping("/tasks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deleteTaskById(@PathVariable(value = "id") Long id) {
